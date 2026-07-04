@@ -156,7 +156,6 @@
     <label>Student</label>
     <nameField>
         <label>Student Name</label>
-        <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Students</pluralLabel>
