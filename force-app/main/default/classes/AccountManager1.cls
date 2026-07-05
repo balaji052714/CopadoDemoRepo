@@ -4,13 +4,14 @@ public class AccountManager1 {
     public static Account createAccount(String accountName) {
         Account acc = new Account(Name = accountName);
         insert acc;
+        System.debug('Added Account' + acc);
         return acc;
     }
 
     // Get Account by Id
     public static Account getAccountById(Id accountId) {
         return [
-            SELECT Id, Name, AccountNumber, AccountSource
+            SELECT Id, Name, AccountSource
             FROM Account
             WHERE Id = :accountId
             LIMIT 1
