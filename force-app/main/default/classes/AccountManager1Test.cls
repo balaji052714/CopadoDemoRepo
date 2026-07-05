@@ -18,6 +18,7 @@ public class AccountManager1Test {
         // Create test data
         Account acc = new Account(
             Name = 'Sample Account',
+            AccountNumber = 'ACC1001',
             AccountSource = 'Phone Inquiry'
         );
         insert acc;
