@@ -10,7 +10,7 @@ public class AccountManager1 {
     // Get Account by Id
     public static Account getAccountById(Id accountId) {
         return [
-            SELECT Id, Name, AccountSource
+            SELECT Id, Name, AccountNumber, AccountSource
             FROM Account
             WHERE Id = :accountId
             LIMIT 1
