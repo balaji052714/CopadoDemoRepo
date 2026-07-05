@@ -4,6 +4,7 @@ public class AccountManager1 {
     public static Account createAccount(String accountName) {
         Account acc = new Account(Name = accountName);
         insert acc;
+        System.debug('Added Account' + acc);
         return acc;
     }
 
