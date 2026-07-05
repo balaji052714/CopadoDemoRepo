@@ -27,6 +27,7 @@ public class AccountManager1 {
         acc.Name = newName;
         acc.AccountSource='web';
         update acc;
+        System.debug('Changed Record' + acc);
     }
 
     // Delete Account
