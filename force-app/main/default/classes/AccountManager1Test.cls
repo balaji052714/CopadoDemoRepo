@@ -2,7 +2,7 @@
 public class AccountManager1Test {
 
     @testSetup
-    static void setupTestData() {
+    static void setupData() {
         Account acc = new Account(
             Name = 'Test Account',
             AccountSource = 'Phone Inquiry'
@@ -19,22 +19,22 @@ public class AccountManager1Test {
 
         Test.stopTest();
 
-        System.assertNotEquals(null, newAcc.Id, 'Account Id should not be null');
+        System.assertNotEquals(null, newAcc.Id);
         System.assertEquals('Created Account', newAcc.Name);
 
-        Account result = [
+        Account acc = [
             SELECT Id, Name
             FROM Account
             WHERE Id = :newAcc.Id
         ];
 
-        System.assertEquals('Created Account', result.Name);
+        System.assertEquals('Created Account', acc.Name);
     }
 
     @isTest
     static void testGetAccountById() {
 
-        Account acc = [
+        Account existingAcc = [
             SELECT Id, Name, AccountSource
             FROM Account
             LIMIT 1
@@ -42,11 +42,11 @@ public class AccountManager1Test {
 
         Test.startTest();
 
-        Account result = AccountManager1.getAccountById(acc.Id);
+        Account result = AccountManager1.getAccountById(existingAcc.Id);
 
         Test.stopTest();
 
-        System.assertEquals(acc.Id, result.Id);
+        System.assertEquals(existingAcc.Id, result.Id);
         System.assertEquals('Test Account', result.Name);
         System.assertEquals('Phone Inquiry', result.AccountSource);
     }
@@ -54,7 +54,7 @@ public class AccountManager1Test {
     @isTest
     static void testUpdateAccount() {
 
-        Account acc = [
+        Account existingAcc = [
             SELECT Id
             FROM Account
             LIMIT 1
@@ -62,14 +62,14 @@ public class AccountManager1Test {
 
         Test.startTest();
 
-        AccountManager1.updateAccount(acc.Id, 'Updated Account');
+        AccountManager1.updateAccount(existingAcc.Id, 'Updated Account');
 
         Test.stopTest();
 
         Account updatedAcc = [
             SELECT Name, AccountSource
             FROM Account
-            WHERE Id = :acc.Id
+            WHERE Id = :existingAcc.Id
         ];
 
         System.assertEquals('Updated Account', updatedAcc.Name);
@@ -79,23 +79,23 @@ public class AccountManager1Test {
     @isTest
     static void testDeleteAccount() {
 
-        Account acc = new Account(
-            Name = 'Delete Me'
+        Account deleteAcc = new Account(
+            Name = 'Delete Account'
         );
-        insert acc;
+        insert deleteAcc;
 
         Test.startTest();
 
-        AccountManager1.deleteAccount(acc.Id);
+        AccountManager1.deleteAccount(deleteAcc.Id);
 
         Test.stopTest();
 
-        Integer accountCount = [
+        Integer countAcc = [
             SELECT COUNT()
             FROM Account
-            WHERE Id = :acc.Id
+            WHERE Id = :deleteAcc.Id
         ];
 
-        System.assertEquals(0, accountCount, 'Account should be deleted.');
+        System.assertEquals(0, countAcc);
     }
 }
